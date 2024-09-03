@@ -1,24 +1,26 @@
-import logo from './logo.svg';
+// import logo from './logo.svg';
 import './App.css';
 
+import Connection from './Web3Connection/Connection';
+import './compnent/Project.css'
+import { darkTheme, lightTheme } from './compnent/theme';
+
+import React, { useState, useMemo } from 'react';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+import CssBaseline from '@mui/material/CssBaseline';
+import Button from '@mui/material/Button';
+import CustomThemeProvider from './Context/themeContext';
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+   <CustomThemeProvider>
+    <div className="App ">
+      {/* <header className="App-header"> */}
+      <Connection/>
+
+      {/* </header> */}
+    
     </div>
+    </CustomThemeProvider>
   );
 }
 

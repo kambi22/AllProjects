@@ -1,0 +1,128 @@
+.ColoredLight {
+   background-color: #5ba5f5 !important;
+   color: rgb(252, 247, 232);
+
+}
+
+.ColoredDark {
+   background-color: #1f1f20 !important;
+   color: rgb(252, 247, 232);
+
+}
+
+.nav-link.ColoredLight {
+   background-color: #5ba5f5;
+   color: rgb(252, 247, 232);
+}
+
+.nav-link.ColoredDark {
+   background-color: #1f1f20 !important;
+   color: rgb(252, 247, 232);
+}
+
+.nav-link.ColoredLight:hover {
+   color: rgb(252, 247, 232);
+   /* Ensure color remains white */
+}
+
+.nav-link.ColoredDark:hover {
+   color: rgb(252, 247, 232);
+   /* Ensure color remains white */
+}
+
+.nav-link.ColoredLight:focus {
+   color: rgb(241, 238, 228)
+      /* Ensure color remains white */
+}
+
+.nav-link.ColoredDark:focus {
+   color: rgb(203, 200, 191);
+   /* Ensure color remains white */
+}
+
+
+.ColoredLight .MuiIconButton-root {
+   color: rgb(252, 247, 232);
+}
+
+.ColoredDark .MuiIconButton-root {
+   color: rgb(252, 247, 232);
+}
+
+.icon.Colored {
+   background-color: #5ba5f5;
+   color: white;
+}
+
+.listStyle {
+   list-style: none;
+   text-align: left;
+}
+
+.Footer {
+   position: relative;
+   width: 100%;
+   bottom: 0px;
+   font-size: 11x;
+   margin-bottom: 0px;
+   margin-top: 100px;
+}
+
+.Cardstyle {
+   max-width: 500px;
+   min-width: 200px;
+   text-align: center;
+   margin: auto;
+}
+
+.CardStyled {
+   max-width: 700px;
+   min-width: 300px;
+   text-align: center;
+   margin: auto;
+}
+
+.Main {
+   background: linear-gradient(45deg, rgb(252, 206, 206), rgb(238, 216, 249), rgb(192, 192, 250));
+}
+
+.ModernCard {
+   background-color: white;
+   opacity: 60%;
+}
+
+.MuuliColorCard {
+   background: linear-gradient(90deg, rgb(253, 198, 198), rgb(247, 245, 248), rgb(194, 194, 252));
+   padding: 5px;
+   box-shadow: 5px 5px 10px rgba(125, 125, 125, 0.3);
+
+}
+
+
+.nftImage {
+   width: 300px;
+   height: 300px;
+   background-color: rebeccapurple;
+}
+
+.MySidebar {
+   width: 80%;
+   position: fixed;
+
+}
+
+.textstyle {
+   width: 100%;
+   white-space: inherit;
+   text-align: left
+}
+
+.ellipsedText {
+   white-space: nowrap;
+   overflow: hidden;
+   text-overflow: ellipsis;
+}
+
+.ShadowEffect:hover {
+   box-shadow: 5px 5px 5px rgba(104, 104, 104, 0.3);
+}
