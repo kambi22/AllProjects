@@ -13,6 +13,9 @@ const Multisig = (props) => {
 
   const [owners, setOwners] = useState([]);
   const [confirmations, setConfirmations] = useState();
+  const [loading, setLoading] = useState(false)
+
+console.log('multi sig contract:',multiContract)
 
   const navigate = useNavigate();
 
@@ -30,12 +33,14 @@ const Multisig = (props) => {
     setOwners(ownersArray);
   };
   const MultiSigWallete = async () => {
+    setLoading(true)
     try {
       const gas = await multiContract.methods.setOwners(owners, confirmations).estimateGas({ from: account });
       const result = await multiContract.methods.setOwners(owners, confirmations).send({ from: account, gas: gas });
       console.log('result', result)
       navigate('mulisignature-details')
       notify('success', "Successful", 'Wallet successfully created')
+      console.log("multisig contract :",multiContract)
     } catch (error) {
       console.log('error', error)
       let errorMessage;
@@ -47,7 +52,10 @@ const Multisig = (props) => {
         errorMessage = 'Unexpected Error';
       }
       notify('error', 'Error', errorMessage)
+    }finally{
+      setLoading(false)
     }
+   
   }
 
   return (
@@ -57,6 +65,12 @@ const Multisig = (props) => {
           <Col className="">
             <Player className="w-75 h-75 mt-5" src='https://lottie.host/46ab3329-44ca-4b64-a246-978c4b229278/A6JyrLjO2D.json' loop autoplay style={{ height: '200px', width: '200px' }} />
           </Col>
+
+          {loading && (
+          <div className="m-auto  bg-successk" style={{top:'50%',left:'50%', transform: 'translate(-50%, -50%)', zIndex: 1, position: 'absolute'}}>
+          <Player className="bg-k " src='https://lottie.host/5a71c736-8150-4cf0-b870-7d97d992f1bc/y3KFjegVpO.json' loop autoplay style={{height:'150px', width:'150px'}}/>
+              </div>
+          )}
           <Col className="mt-3">
           <h5 className="text-start">Create new wallet</h5>
             <Card className="p-0 m-0">
@@ -94,7 +108,7 @@ const Multisig = (props) => {
               </CardContent>
             </Card>
             <div className="mt-5 p-3">
-              <TextField className="w-100 ellipsedText" label='Owners' placeholder="Enter owners array " type="text" id="address" name="address" onChange={handleOwnersInput} required />
+              <TextField className="w-100 ellipsedText" label='Owners' placeholder="Enter owners seprate with comma's" type="text" id="address" name="address" onChange={handleOwnersInput} required />
               <TextField className="w-100 mt-3 ellipsedText" label='Confirmations' placeholder="Enter confirmations number" type="number" id="number" name="number" onChange={(e) => setConfirmations(e.target.value)} required /> 
               
               <br /><br />

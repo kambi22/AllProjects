@@ -4,6 +4,7 @@ import { Button, Card, CardContent, getAlertTitleUtilityClass, Paper, TextField 
 import { useNavigate } from "react-router";
 import { BlockchainContext } from "../Web3Connection/Connection";
 import { notify } from "./Notify";
+import { Player } from "@lottiefiles/react-lottie-player";
 
 const BiddingEnglish = () => {
   const { web, nftContract, dutchContract, engContract, multiContract, account } = useContext(BlockchainContext)
@@ -11,10 +12,12 @@ const BiddingEnglish = () => {
   const [amount, setAmount] = useState();
   const [allDetail, setAllDetail] = useState();
   const [endTime, setEndTime] = useState();
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
 
   const getAuctionDetail = async () => {
+    setLoading(true)
     try {
       const result = await engContract.methods.AuctionDetail().call();
       setAllDetail(result)
@@ -28,6 +31,8 @@ const BiddingEnglish = () => {
    
     } catch (error) {
       console.log('error', error)
+    }finally{
+      setLoading(false)
     }
   };
 
@@ -78,6 +83,7 @@ const BiddingEnglish = () => {
 
   }, [multiContract]);
   const getBid = async () => {
+    setLoading(true)
     try {
       let Amount = web.utils.toWei(amount, 'ether');
       const gas = await engContract.methods.Bid(tokenId).estimateGas({ from: account, value: Amount })
@@ -95,9 +101,12 @@ const BiddingEnglish = () => {
         errorMessage = "Unexpected Error";
       }
       notify('error', 'Error', errorMessage)
+    }finally{
+      setLoading(false)
     }
   }
   const getCancel = async () => {
+    setLoading(true)
     try {
       const gas = await engContract.methods.Cancel(tokenId).estimateGas({ from: account })
       const result = await engContract.methods.Cancel(tokenId).send({ from: account, gas: gas });
@@ -114,9 +123,12 @@ const BiddingEnglish = () => {
         errorMessage = "Unexpected Error";
       }
       notify('error', 'Error', errorMessage)
+    }finally{
+      setLoading(false)
     }
   }
   const getEndTime = async () => {
+    setLoading(true)
     try {
       const gas = await engContract.methods.EndTime(tokenId).estimateGas({ from: account })
       const result = await engContract.methods.EndTime(tokenId).send({ from: account, gas: gas });
@@ -133,9 +145,12 @@ const BiddingEnglish = () => {
         errorMessage = "Unexpected Error";
       }
       notify('error', 'Error', errorMessage)
+    }finally{
+      setLoading(false)
     }
   }
   const getWithdraw = async () => {
+    setLoading(true)
     try {
       const gas = await engContract.methods.Withdraw(tokenId).estimateGas({ from: account })
       const result = await engContract.methods.Withdraw(tokenId).send({ from: account, gas: gas });
@@ -152,10 +167,13 @@ const BiddingEnglish = () => {
         errorMessage = "Unexpected Error";
       }
       notify('error', 'Error', errorMessage)
+    }finally{
+      setLoading(false)
     }
   }
 
   const resetAuction = async() => {
+    setLoading(true)
     try {
       const gas = await engContract.methods.reset().estimateGas({from: account});
       const result = await engContract.methods.reset().send({from: account, gas: gas});
@@ -166,6 +184,8 @@ const BiddingEnglish = () => {
     } catch (error) {
       console.log('error reset',error)
       notify('error','Error',error.message)
+    }finally{
+      setLoading(false)
     }
 }
   return (
@@ -223,6 +243,11 @@ const BiddingEnglish = () => {
               </Card>
             </Col>
           </Row>
+          {loading && (
+          <div className="m-auto  bg-successk" style={{top:'50%',left:'50%', transform: 'translate(-50%, -50%)', zIndex: 1, position: 'absolute'}}>
+          <Player className="bg-k  " src='https://lottie.host/5a71c736-8150-4cf0-b870-7d97d992f1bc/y3KFjegVpO.json' loop autoplay style={{height:'150px', width:'150px'}} />
+              </div>
+          )}
           <CardContent>
             <div className="Cardstyle  mt-5 mb-5 ">
               <TextField className="w-100 ellipsedText" label='Token Id' placeholder="Enter token id" type="number" id="tokenid" name="tokenid" required onChange={(e) => setTokenId(e.target.value)} />

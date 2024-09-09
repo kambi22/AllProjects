@@ -12130,12 +12130,18 @@
     "5777": {
       "events": {},
       "links": {},
-      "address": "0xb762DC5FBf12B1945A3D004760f1705452fD6f44",
-      "transactionHash": "0x95974e8407ed2e7060f24368e75546ad917632cdfa84668daf943fe2b16c9291"
+      "address": "0xe4727d45CeFa3CffD8Dc82EB2b44CC50Be8A054e",
+      "transactionHash": "0x3f2a5ebe8c097b58978450787d60b9217b98a98a51c9ec0a0df86d3949385846"
+    },
+    "17000": {
+      "events": {},
+      "links": {},
+      "address": "0xAA71b602C0b0b6EEF2a4F2e3E6763cc9Fc8d8702",
+      "transactionHash": "0x5e566734332aae7dd55a4aa142518b8d4b221dc8b8698a583cbea61e0033e34d"
     }
   },
   "schemaVersion": "3.4.16",
-  "updatedAt": "2024-08-30T10:41:50.045Z",
+  "updatedAt": "2024-09-04T12:19:00.277Z",
   "devdoc": {
     "kind": "dev",
     "methods": {},

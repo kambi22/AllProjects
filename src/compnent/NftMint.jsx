@@ -5,17 +5,21 @@ import { Card, CardContent, CardMedia, TextField, Tooltip } from "@mui/material"
 import { notify } from "./Notify";
 import { Col, Container, Row } from "react-bootstrap";
 import { useNavigate } from "react-router";
-
+import { Player } from "@lottiefiles/react-lottie-player";
+import { themeContext } from "../Context/themeContext";
+import { dark } from "@mui/material/styles/createPalette";
+//import defultImage from './images/image.png'
 const NftMint = (props) => {
     const { web, nftContract, dutchAddress, account } = useContext(BlockchainContext);
     // const [name, setName] = useState('');
     // const [symbol, setSymbol] = useState('');
-    // const [admin, setAdmin] = useState('');
+    const { isDark, toggleTheme } = useContext(themeContext)
     const [to, setTo] = useState('');
     const [tokenId, setTokenId] = useState();
     const [dutchContAddress, setDutchContAddress] = useState(dutchAddress);//0xAC952ea6948641A34C9518E0D33e4924a77dC264
     const [image, setImage] = useState("https://i0.wp.com/css-tricks.com/wp-content/uploads/2015/11/drag-drop-upload-2.gif");
     const [isImage, setIsImage] = useState(false);
+    const [loading, setLoading] = useState(false);
     // const [isIntialized, setIsIntialized] = useState(false);
     const [isminted, setIsminted] = useState(false);
     const navigate = useNavigate();
@@ -96,10 +100,11 @@ const NftMint = (props) => {
         }
 
     }
-    useEffect(()=>{
+    useEffect(() => {
         getOwner()
-    },[tokenId]);
+    }, [tokenId]);
     const mintNft = async () => {
+        setLoading(true)
         try {
             if (isImage) {
                 const gasEstimate = await nftContract.methods.mint(to, tokenId).estimateGas({ from: account });
@@ -121,7 +126,7 @@ const NftMint = (props) => {
                 errorMessage = 'Unexpected Error';
             }
             notify('error', 'Error', errorMessage)
-        }
+        }setLoading(false)
     }
     // const Initializenft = async () => {
     //     try {
@@ -144,17 +149,15 @@ const NftMint = (props) => {
     // }
 
     const setApprovalForAllToAuction = async () => {
+        setLoading(true)
         try {
+            const gasEstimate = await nftContract.methods.setApprovalForAllToAuction(dutchContAddress, tokenId).estimateGas({ from: account });
+            const result = await nftContract.methods.setApprovalForAllToAuction(dutchContAddress, tokenId).send({ from: account, gas: gasEstimate });
+            console.log('result mint nft', result)
+            checkisApprovedForAll();
+            navigate('/dutch-auction')
+            notify('success', 'Successful', 'Nft item Successfully Approved')
 
-            if (isminted) {
-                const gasEstimate = await nftContract.methods.setApprovalForAllToAuction(dutchContAddress).estimateGas({ from: account });
-                const result = await nftContract.methods.setApprovalForAllToAuction(dutchContAddress).send({ from: account, gas: gasEstimate });
-                console.log('result mint nft', result)
-                navigate('/dutch-auction')
-                notify('success', 'Successful', 'Nft item Successfully Approved')
-            } else {
-                notify('error', 'Error', 'Please mint nft before Approvel')
-            }
         } catch (error) {
             let errorMessage;
             console.log('error is', error)
@@ -166,17 +169,20 @@ const NftMint = (props) => {
                 errorMessage = 'Unexpected Error';
             }
             notify('error', 'Error', errorMessage)
+        }finally{
+            setLoading(false)
         }
     }
     const checkisApprovedForAll = async () => {
         try {
             const result = await nftContract.methods.checkisApprovedForAll(to, dutchContAddress).call({ from: account });
-            console.log('result mint nft', result)
+            console.log('Is nft Approved for all', result)
         } catch (error) {
             console.log('error is approved for all:', error)
         }
     }
     const burnNft = async () => {
+        setLoading(true)
         try {
             const gas = await nftContract.methods.burn(tokenId).estimateGas({ from: account });
             const result = await nftContract.methods.burn(tokenId).send({ from: account, gas: gas });
@@ -193,9 +199,10 @@ const NftMint = (props) => {
                 errorMessage = 'Unexpected Error';
             }
             notify('error', 'Error', errorMessage)
+        }finally{
+            setLoading(false)
         }
     }
-
     // const GetsetApprovalForAllToAuction = async () => {
     //     try {
     //         const gas = await nftContract.methods.setApprovalForAllToAuction().estimateGas({ from: account });
@@ -249,10 +256,11 @@ const NftMint = (props) => {
         e.preventDefault();
         isImage(true)
     };
-
+   
+  
     return (
-        <div className="">
-            <Container className="mt-5">
+        <div className="nftmain  hv-100 wv-100">
+            <Container className="">
                 <Card className="MuuliColorCard shadow rounded-5 mt-5">
                     <CardContent>
                         <Row >
@@ -291,6 +299,11 @@ const NftMint = (props) => {
                                     />
                                 </div>
                             </Col>
+                            {loading && (
+                                <div className="m-auto  bg-successk" style={{ top: '50%', left: '50%', transform: 'translate(-50%, -50%)', zIndex: 1, position: 'absolute' }}>
+                                    <Player className="bg-k " src='https://lottie.host/5a71c736-8150-4cf0-b870-7d97d992f1bc/y3KFjegVpO.json' loop autoplay style={{ height: '150px', width: '150px' }} />
+                                </div>
+                            )}
                             <Col >
                                 <div className=" p-3 mt-3" >
                                     {/* <TextField className="text-white  mt-3 w-100" id="name " name="name" label='Name' placeholder="Enter item name" value={name} onChange={(e) => setName(e.target.value)} />

@@ -47,7 +47,7 @@ const Home = (props) => {
             <Col>
               <div className="p-5 mt-5 bg-primaryk align-items-center" >
                 <h1 className="text-info mb-5 display-5 text-start"><strong>Multi-Signature Wallet</strong></h1>
-                <p className="textstyle">A multisig wallet, also known as a multisig vault or multisig safe, is a digital application for securely storing cryptocurrency assets like bitcoins. Multiple signatures (private keys) are required to access the bitcoin stored in the wallet and to perform any transactions on those bitcoins. If one of those signatures is missing, the transaction will not go through. A multisig wallet is like a bank's safe deposit box that requires multiple keys to be used at the same time to open it.</p>
+                <p className="textstyle text-secondary">A multisig wallet, also known as a multisig vault or multisig safe, is a digital application for securely storing cryptocurrency assets like bitcoins. Multiple signatures (private keys) are required to access the bitcoin stored in the wallet and to perform any transactions on those bitcoins. If one of those signatures is missing, the transaction will not go through. A multisig wallet is like a bank's safe deposit box that requires multiple keys to be used at the same time to open it.</p>
               
                 <IconButton onClick={() => navigate('multisignature-wallet')}>
                   <Player className="   " src="https://lottie.host/e09c9d5b-9bfa-4806-a2ae-76d5035a9e53/Aw4B3mPqMn.json" loop autoplay />

@@ -3,7 +3,7 @@ import Web3 from 'web3'
 import MynftAbi from '../contracts/MyNFT.json'
 import DuthcAbi from '../contracts/DutchAuction.json'
 import EnglishAbi from '../contracts/EnglishAuction.json';
-import MultisgAbi from '../contracts/Multisig.json'
+import MultiAbi from '../contracts/Multisig.json'
 import SimpleAbi from '../contracts/SimpleStorage.json';
 import Routting from "../compnent/Routing";
 import { notify } from "../compnent/Notify";
@@ -38,7 +38,7 @@ const Connection = (props) => {
 
                 const nftAbi = MynftAbi.abi
                 const dutchAbi = DuthcAbi.abi
-                const multiAbi = MultisgAbi.abi;
+                const multiAbi = MultiAbi.abi
                 const engAbi = EnglishAbi.abi;
                 const simpleAbi = SimpleAbi.abi;
 
@@ -49,7 +49,7 @@ const Connection = (props) => {
                 const nftData = await MynftAbi.networks[netId];
                 const dutchData = await DuthcAbi.networks[netId];
                 const engData = await EnglishAbi.networks[netId];
-                const multiData = await MultisgAbi.networks[netId];
+                const multiData = await MultiAbi.networks[netId];
                 const simpleData = await SimpleAbi.networks[netId];
 
               
@@ -63,17 +63,19 @@ const Connection = (props) => {
                 setNftContAddress(nftData.address)
                 setDutchAddress(dutchData.address)
 
-                const MultiContract = new web.eth.Contract(multiAbi, multiData.address)
+                const multicontract = new web.eth.Contract(multiAbi, multiData.address)
                 const dutchContract = new web.eth.Contract(dutchAbi, dutchData.address)
                 const nftContract = new web.eth.Contract(nftAbi, nftData.address)
                 const engcontract = new web.eth.Contract(engAbi, engData.address)
                 const simpleContract = new web.eth.Contract(simpleAbi, simpleData.address);
 
-                setMultiContract(MultiContract)
+                setMultiContract(multicontract)
                 setnftContract(nftContract)
                 setDutchContract(dutchContract)
                 setEngContract(engcontract)
                 setSimple(simpleContract)
+
+                console.log('multi contract instance from connection file :',multicontract)
             } catch (error) {
                 console.log('Error fetch data from blockchain.')
             }

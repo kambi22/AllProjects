@@ -1,6 +1,7 @@
 import { Button, IconButton, InputAdornment, TextField } from "@mui/material";
 import React, { useContext, useState } from "react"
-import {  Visibility,VisibilityOff } from "@mui/icons-material";
+// import {  Visibility,VisibilityOff } from "@mui/icons-material";
+import { MdVisibility, MdVisibilityOff  } from "react-icons/md";
 import { Player } from "@lottiefiles/react-lottie-player";
 import Swal from 'sweetalert2'
 import {notify, toast} from "./Notify";
@@ -37,10 +38,10 @@ const Login = (props) => {
           endAdornment: (
             <InputAdornment position="end">
            <IconButton className={showpassword? 'd-inline':'d-none'} onClick={()=>setShowpassword(false)}>
-              <Visibility/>
+              <MdVisibility/>
            </IconButton>
            <IconButton className={!showpassword? 'd-inline':'d-none'} onClick={()=>setShowpassword(true)}>
-              <VisibilityOff/>
+              <MdVisibilityOff/>
            </IconButton>
            </InputAdornment>
           )

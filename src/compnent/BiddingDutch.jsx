@@ -5,11 +5,13 @@ import { useNavigate } from "react-router";
 import { BlockchainContext } from "../Web3Connection/Connection";
 import { notify } from "./Notify";
 import { useBootstrapBreakpoints } from "react-bootstrap/esm/ThemeProvider";
+import { Player } from "@lottiefiles/react-lottie-player";
 const BiddingDutch = (props) => {
   const { web, nftContract, dutchContract, engContract, multiContract, account } = useContext(BlockchainContext)
   const [tokenId, setTokenId] = useState();
   const [amount, setAmount] = useState();
   const [detail, setDetail] = useState();
+  const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
 
@@ -24,18 +26,22 @@ const BiddingDutch = (props) => {
     }
   }
   const getDetails = async () => {
+    setLoading(true)
     try {
       const result = await dutchContract.methods.getAuctionDetails().call({ from: account });
       console.log("time", result)
       setDetail(result)
     } catch (error) {
       console.log('error', error)
+    }finally{
+      setLoading(false)
     }
   }
   useEffect(() => {
     getDetails();
   }, [dutchContract]);
   const getBuyItem = async () => {
+    setLoading(true)
     try {
       const gas = await dutchContract.methods.buy().estimateGas({ from: account, value: web.utils.toWei(amount, "ether") });
       const result = await dutchContract.methods.buy().send({ from: account, gas: gas, value: web.utils.toWei(amount, "ether") });
@@ -55,10 +61,13 @@ const BiddingDutch = (props) => {
       }
       notify('error', 'Error', errorMessage)
 
+    }finally{
+      setLoading(false)
     }
   }
 
   const getEndAuction = async () => {
+    setLoading(true)
     try {
       const gas = await dutchContract.methods.endAuction().estimateGas({ from: account });
       const result = await dutchContract.methods.endAuction().send({ from: account, gas: gas });
@@ -76,9 +85,12 @@ const BiddingDutch = (props) => {
       }
       notify('error', 'Error', errorMessage)
 
+    }finally{
+      setLoading(false)
     }
   }
   const resetAuction = async () => {
+    setLoading(true)
     try {
       const gas = await dutchContract.methods.resetAuction().estimateGas({ from: account });
       const result = await dutchContract.methods.resetAuction().send({ from: account, gas: gas });
@@ -89,6 +101,8 @@ const BiddingDutch = (props) => {
       console.log('error resent dutch auction',error)
       notify('error','Error',error.message)
 
+    }finally{
+      setLoading(false)
     }
   }
   return (
@@ -143,6 +157,11 @@ const BiddingDutch = (props) => {
               </Card>
             </Col>
           </Row>
+          {loading && (
+          <div className="m-auto  bg-successk" style={{top:'50%',left:'50%', transform: 'translate(-50%, -50%)', zIndex: 1, position: 'absolute'}}>
+          <Player className="bg-k  " src='https://lottie.host/5a71c736-8150-4cf0-b870-7d97d992f1bc/y3KFjegVpO.json' loop autoplay style={{height:'150px', width:'150px'}} />
+              </div>
+          )}
           <CardContent>
             <div className="Cardstyle  mt-5 mb-5 ">
 

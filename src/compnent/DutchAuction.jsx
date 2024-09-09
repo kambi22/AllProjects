@@ -21,6 +21,7 @@ const DutchAuction = (props) => {
   const [timeEnd, setTimeEnd] = useState();
   const [btnCreatColor, setBtnCreatColor] = useState(false)
   const [detail, setDetail] = useState();
+  const [loading, setLoading] = useState(false);
 
   const [nftName, setNftName] = useState();
   const [nftSymbol, setNftSymbol] = useState();
@@ -87,6 +88,7 @@ useEffect(()=>{
  
   // Function's calling block
   const getCreateAuction = async () => {//nft contract addres: 0x0F8Da504De2D5f7553bbe62E337a6F46b92DbF1e , tokenId : 6
+   setLoading(true)
     try {
       const gas = await dutchContract.methods.createAuction(startPrice, endPrice, duration, nftItem, tokenId).estimateGas({ from: account })
       const result = await dutchContract.methods.createAuction(startPrice, endPrice, duration, nftItem, tokenId).send({ from: account, gas: gas })
@@ -106,6 +108,8 @@ useEffect(()=>{
       }
       notify('error','Error',errorMessage)
 
+    }finally{
+      setLoading(false)
     }
   }
   // const getDetails = async () => {
@@ -132,16 +136,16 @@ useEffect(()=>{
                 <CardContent>
                   {tokenId ? (
                     <ul className="listStyle m-0 p-1  ">
-                      <li className="ellipsedText">NFT Collection Name: {nftName}</li>
-                      <li className="ellipsedText">NFT Collection Symbol: {nftSymbol}</li>
-                      <li className="ellipsedText">NFT Collection Token Id: {tokenId}</li>
+                      <li className="ellipsedText">Name: {nftName}</li>
+                      <li className="ellipsedText">Symbol: {nftSymbol}</li>
+                      <li className="ellipsedText">Token Id: {tokenId}</li>
 
                     </ul>
                   ) : (
                     <ul className="listStyle m-0 p-1  ">
-                       <li className="ellipsedText">NFT Collection Name: </li>
-                      <li className="ellipsedText">NFT Collection Symbol: </li>
-                      <li className="ellipsedText">NFT Collection Token Id: 0</li>
+                       <li className="ellipsedText">Name: </li>
+                      <li className="ellipsedText">Symbol: </li>
+                      <li className="ellipsedText">Token Id: 0</li>
                     </ul>
                   )}
 
@@ -155,21 +159,26 @@ useEffect(()=>{
                 <CardContent>
                 {tokenId ? (
                     <ul className="listStyle m-0 p-1  ">
-                     <li className="ellipsedText">Nft Collection Owner: {nftOwner}</li>
-                     <li className="ellipsedText">Nft Collection Admin: {nftAdmin}</li>
-                     <li className="ellipsedText">Nft Token Uri: {nftTokenuri}</li>
+                     <li className="ellipsedText">Owner: {nftOwner}</li>
+                     <li className="ellipsedText">Admin: {nftAdmin}</li>
+                     <li className="ellipsedText">Token Uri: {nftTokenuri}</li>
                       
                     </ul>
                   ) : (
                     <ul className="listStyle m-0 p-1  ">
-                      <li className="ellipsedText">Nft Collection Owner: 0x00000000000000000000000000000000000000000000</li>
-                      <li className="ellipsedText">Nft Collection Admin:  0x00000000000000000000000000000000000000000000</li>
-                      <li className="ellipsedText">Nft Token Uri: </li>
+                      <li className="ellipsedText">Owner: 0x00000000000000000000000000000000000000000000</li>
+                      <li className="ellipsedText">Admin:  0x00000000000000000000000000000000000000000000</li>
+                      <li className="ellipsedText">Token Uri: </li>
                     </ul>
                   )}
                 </CardContent>
               </Card>
             </Col>
+            {loading && (
+          <div className="m-auto  bg-successk" style={{top:'50%',left:'50%', transform: 'translate(-50%, -50%)', zIndex: 1, position: 'absolute'}}>
+          <Player className="bg-k  " src='https://lottie.host/5a71c736-8150-4cf0-b870-7d97d992f1bc/y3KFjegVpO.json' loop autoplay style={{height:'150px', width:'150px'}} />
+              </div>
+          )}
           </Row>
         <div className="CardStyled ">
         

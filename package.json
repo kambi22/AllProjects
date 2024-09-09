@@ -1,7 +1,8 @@
 {
+  
   "name": "client",
   "version": "1.0.0",
-  "description": "This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).",
+  "description": "This Project Is Created By Satnam Singh [Softwork](https://www.linkedin.com/in/satnam-singh-2771a4316/).",
   "main": "switch.js",
   "dependencies": {
     "@emotion/react": "^11.13.0",
@@ -957,6 +958,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
+    
   },
   "keywords": [],
   "author": "",
@@ -972,5 +974,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "gh-pages": "^6.1.1"
   }
 }
